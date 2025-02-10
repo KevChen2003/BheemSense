@@ -1,0 +1,288 @@
+{
+    "name": "HeatMap",
+    "description": "Feature rich data visulization control used to visualize the matrix data where the individual values are represented as colors",
+    "keywords": {
+        "common": [
+            "ej2",
+			"syncfusion",
+			"web components",
+			"data visualization",
+			"heatmap",
+			"heatmap chart",
+			"matrix chart",
+			"grid chart",
+			"heat map",
+			"bubble heatmap",
+			"calendar heatmap",
+			"rectangular heatmap",
+			"sector heatmap",
+			"axis",
+			"datetime axis",
+			"category axis",
+			"numeric axis",
+			"labels",
+			"multi-level labels",
+			"selection",
+			"palette",
+			"colors",
+			"legend"
+        ],
+        "angular": [
+            "angular",
+            "ng",
+            "ng-heatmap",
+            "ej2-ng-heatmap"
+        ],
+        "react": [
+            "react",
+            "react-heatmap",
+            "ej2-react-heatmap"
+        ],
+        "vue": [
+            "vue",
+            "vue-heatmap",
+            "ej2-vue-heatmap"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/syncfusion/ej2-heatmap"
+    },
+    "eventInterfaces": ["ITooltipEventArgs", "IResizeEventArgs", "ILoadedEventArgs", "ICellEventArgs", "ISelectedEventArgs", "ICellClickEventArgs"],
+    "components": [
+        {
+            "baseClass": "HeatMap",
+            "directoryName": "heatmap",
+            "defaultTag": "<div id='heatmap'></div>",
+            "type": "simple",
+            "twoWays": [],
+			"blazorPlaceholder": "heatmap",
+            "comment": [
+                "/**",
+                " * Represents the Angular HeatMap component. ",
+                " * This is used to customize the properties of the heatmap in order to visualize two-dimensional data, with values represented by gradient or solid color variations.",
+                " * ```html",
+                " * <ejs-heatmap></ejs-heatmap>",
+                " * ```",
+                " */"
+            ],
+            "reactComment": [
+                "/**",
+                " * Represents the React HeatMap component. ",
+                " * This is used to customize the properties of the heatmap in order to visualize two-dimensional data, with values represented by gradient or solid color variations.",
+                " * ```tsx",
+                " * <HeatMapComponent></HeatMapComponent>",
+                " * ```",
+                " */"
+            ],
+            "vueComment": [
+                "/**",
+                " * Represents the Vue HeatMap component. ",
+                " * This is used to customize the properties of the heatmap in order to visualize two-dimensional data, with values represented by gradient or solid color variations.",
+                " * ```vue",
+                " * <ejs-heatmap></ejs-heatmap>",
+                " * ```",
+                " */"
+            ],
+            "dynamicModules": [
+                "Legend",
+                "Tooltip",
+                "Adaptor"
+            ],
+            "diModuleFiles": [
+                {
+                    "fileName": "Legend"
+                },
+                {
+                    "fileName": "Tooltip"
+                },
+                {
+                    "fileName": "Adaptor"
+                }
+            ],
+            "complexDirective": [
+                {
+                    "propertyName": "xAxis",
+                    "baseClass": "Axis",
+                    "blazorClassName": "HeatMapXAxis",
+					"isCommon": true,
+                    "blazorCommonClassName": "HeatMapCommonAxis",
+                    "complexDirective": [
+                        {
+                            "propertyName": "border",
+                            "baseClass": "AxisLabelBorder",
+                            "isCommon": "true",
+                            "blazorCommonClassName": "HeatMapCommonLabelBorder",
+                            "blazorClassName": "HeatMapAxisLabelBorder"
+
+                        }
+                    ],
+                    "tagDirective": [
+                        {
+                            "arrayDirectiveClassName": "MultiLevelLabels",
+                            "directiveClassName": "MultiLevelLabel",
+                            "arrayDirectiveSelector": "e-heatmap-xaxis>e-multilevellabels",
+                            "directiveSelector": "e-heatmap-xaxis>e-multilevellabels>e-multilevellabel",
+                            "aspArrayDirectiveSelector": "e-xaxis-multilevellabels",
+                            "aspDirectiveSelector": "e-xaxis-multilevellabel",
+                            "propertyName": "multiLevelLabels",
+                            "directoryName": "heatmap",
+                            "baseClass": "MultiLevelLabels",
+                            "comment": [
+                                "/**",
+                                " * Represents the directive to render multi-level labels in x-axis.",
+                                " * ```html",
+                                " * <e-heatmap-xaxis>",
+                                " * <e-multilevellabels>",
+                                " * <e-multilevellabel></e-multilevellabel>",
+                                " * </e-multilevellabels>",
+                                " * </e-heatmap-xaxis>",
+                                " * ```",
+                                " */"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "propertyName": "yAxis",
+                    "baseClass": "Axis",
+                    "blazorClassName": "HeatMapYAxis",
+                    "isCommon": true,
+                    "blazorCommonClassName": "HeatMapCommonAxis",
+                    "complexDirective": [
+                        {
+                            "propertyName": "border",
+                            "baseClass": "AxisLabelBorder",
+                            "isCommon": "true",
+                            "blazorCommonClassName": "HeatMapCommonLabelBorder",
+                            "blazorClassName": "HeatMapAxisLabelBorder"
+                        }
+                    ],
+                    "tagDirective": [
+                        {
+                            "arrayDirectiveClassName": "MultiLevelLabels",
+                            "directiveClassName": "MultiLevelLabel",
+                            "arrayDirectiveSelector": "e-heatmap-yaxis>e-multilevellabels",
+                            "directiveSelector": "e-heatmap-yaxis>e-multilevellabels>e-multilevellabel",
+                            "aspArrayDirectiveSelector": "e-yaxis-multilevellabels",
+                            "aspDirectiveSelector": "e-yaxis-multilevellabel",
+                            "propertyName": "multiLevelLabels",
+                            "directoryName": "heatmap",
+                            "baseClass": "MultiLevelLabels",
+                            "comment": [
+                                "/**",
+                                " * Represents the directive to render multi-level labels in y-axis.",
+                                " * ```html",
+                                " * <e-heatmap-yaxis>",
+                                " * <e-multilevellabels>",
+                                " * <e-multilevellabel></e-multilevellabel>",
+                                " * </e-multilevellabels>",
+                                " * </e-heatmap-yaxis>",
+                                " * ```",
+                                " */"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "propertyName": "titleSettings",
+                    "baseClass": "Title"
+                },
+                {
+                    "propertyName": "margin",
+                    "baseClass": "Margin"
+                },
+                {
+                    "propertyName": "cellSettings",
+                    "baseClass": "CellSettings",
+                    "complexDirective": [
+                        {
+                            "propertyName": "bubbleSize",
+                            "baseClass": "BubbleSize"
+                        }
+                    ]
+                },
+                {
+                    "propertyName": "paletteSettings",
+                    "baseClass": "PaletteSettings",
+                    "complexDirective": [
+                        {
+                            "propertyName": "fillColor",
+                            "baseClass": "FillColor"
+                        }
+                    ],
+                    "tagDirective": [
+                        {
+                            "arrayDirectiveClassName": "Palettes",
+                            "directiveClassName": "Palette",
+                            "arrayDirectiveSelector": "e-heatmap-palettesettings>e-palettes",
+                            "aspArrayDirectiveSelector": "e-palettes",
+                            "directiveSelector": "e-heatmap-palettesettings>e-palettes>e-palette",
+                            "aspDirectiveSelector": "e-palette",
+                            "propertyName": "palette",
+                            "directoryName": "heatmap",
+                            "baseClass": "PaletteCollection",
+                            "comment": [
+                                "/**",
+                                " * Represents the directive to receive the palette colors.",
+                                " * ```html",
+                                " * <e-heatmap-palettesettings>",
+                                " * <e-palettes>",
+                                " * <e-palette></e-palette>",
+                                " * </e-palettes>",
+                                " * </e-heatmap-palettesettings>",
+                                " * ```",
+                                " */"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "propertyName": "legendSettings",
+                    "baseClass": "LegendSettings",
+                    "complexDirective": [
+                        {
+                            "propertyName": "title",
+                            "baseClass": "Title",
+                            "blazorClassName": "HeatMapLegendTitle",
+                            "complexDirective": [
+                                {
+                                    "propertyName": "textStyle",
+                                    "baseClass": "Font",
+                                    "blazorClassName": "HeatMapLegendTitleTextStyle"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "propertyName": "tooltipSettings",
+                    "baseClass": "TooltipSettings",
+                    "complexDirective": [
+                        {
+                            "propertyName": "border",
+                            "baseClass": "TooltipBorder"
+                        },
+                        {
+                            "propertyName": "textStyle",
+                            "baseClass": "Font"
+                        }
+                    ]
+                },
+                {
+                    "propertyName": "dataSourceSettings",
+                    "baseClass": "Data",
+                    "blazorClassName": "HeatMapDataSourceSettings",
+                    "complexDirective": [
+                        {
+                            "propertyName": "bubbleDataMapping",
+                            "baseClass": "BubbleData",
+                            "blazorClassName": "HeatMapBubbleDataMapping"
+                        }
+                    ]
+                }
+            ],
+            "tagDirective": []
+        }
+    ]
+}
