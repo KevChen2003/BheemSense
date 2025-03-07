@@ -1,0 +1,354 @@
+{
+    "patients": [
+        {
+            "name": "John",
+            "age": 68,
+            "nextTurn": 120,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Margaret",
+            "age": 72,
+            "nextTurn": 90,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Robert",
+            "age": 85,
+            "nextTurn": 30,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Alice",
+            "age": 78,
+            "nextTurn": 150,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "George",
+            "age": 80,
+            "nextTurn": -10,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Ethel",
+            "age": 88,
+            "nextTurn": 180,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Harold",
+            "age": 75,
+            "nextTurn": 45,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Dorothy",
+            "age": 82,
+            "nextTurn": 20,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Frank",
+            "age": 79,
+            "nextTurn": 90,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Edith",
+            "age": 91,
+            "nextTurn": 60,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Walter",
+            "age": 77,
+            "nextTurn": -20,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Mabel",
+            "age": 84,
+            "nextTurn": 30,
+            "needsAssistance": true,
+            "hasInquiry": true
+        },
+        {
+            "name": "Henry",
+            "age": 73,
+            "nextTurn": 180,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Florence",
+            "age": 89,
+            "nextTurn": 120,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Arthur",
+            "age": 76,
+            "nextTurn": 90,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Sarah",
+            "age": 69,
+            "nextTurn": 150,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Tom",
+            "age": 77,
+            "nextTurn": 110,
+            "needsAssistance": true,
+            "hasInquiry": false
+        },
+        {
+            "name": "Ruth",
+            "age": 68,
+            "nextTurn": 60,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "David",
+            "age": 85,
+            "nextTurn": 140,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Isabel",
+            "age": 83,
+            "nextTurn": 30,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Catherine",
+            "age": 80,
+            "nextTurn": 170,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Paul",
+            "age": 81,
+            "nextTurn": 45,
+            "needsAssistance": true,
+            "hasInquiry": true
+        },
+        {
+            "name": "Stanley",
+            "age": 86,
+            "nextTurn": 90,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Lily",
+            "age": 72,
+            "nextTurn": 120,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "James",
+            "age": 78,
+            "nextTurn": 180,
+            "needsAssistance": true,
+            "hasInquiry": false
+        },
+        {
+            "name": "Beryl",
+            "age": 90,
+            "nextTurn": 30,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Elsie",
+            "age": 74,
+            "nextTurn": 60,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Grace",
+            "age": 82,
+            "nextTurn": 180,
+            "needsAssistance": true,
+            "hasInquiry": false
+        },
+        {
+            "name": "Norman",
+            "age": 83,
+            "nextTurn": 150,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Oliver",
+            "age": 76,
+            "nextTurn": 45,
+            "needsAssistance": true,
+            "hasInquiry": false
+        },
+        {
+            "name": "Doris",
+            "age": 79,
+            "nextTurn": 110,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Edgar",
+            "age": 70,
+            "nextTurn": 30,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "May",
+            "age": 88,
+            "nextTurn": 150,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Vera",
+            "age": 76,
+            "nextTurn": 120,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Albert",
+            "age": 85,
+            "nextTurn": 30,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Ellen",
+            "age": 81,
+            "nextTurn": 90,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Reginald",
+            "age": 72,
+            "nextTurn": 120,
+            "needsAssistance": true,
+            "hasInquiry": true
+        },
+        {
+            "name": "Ralph",
+            "age": 84,
+            "nextTurn": 30,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Beatrice",
+            "age": 70,
+            "nextTurn": 180,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Martha",
+            "age": 78,
+            "nextTurn": 120,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Hugh",
+            "age": 73,
+            "nextTurn": 45,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Leo",
+            "age": 81,
+            "nextTurn": 90,
+            "needsAssistance": true,
+            "hasInquiry": false
+        },
+        {
+            "name": "Josephine",
+            "age": 90,
+            "nextTurn": 30,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Victor",
+            "age": 74,
+            "nextTurn": 180,
+            "needsAssistance": true,
+            "hasInquiry": false
+        },
+        {
+            "name": "Nora",
+            "age": 76,
+            "nextTurn": 150,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Clyde",
+            "age": 77,
+            "nextTurn": 120,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Wilfred",
+            "age": 82,
+            "nextTurn": 45,
+            "needsAssistance": false,
+            "hasInquiry": true
+        },
+        {
+            "name": "Hilda",
+            "age": 70,
+            "nextTurn": 90,
+            "needsAssistance": true,
+            "hasInquiry": false
+        },
+        {
+            "name": "Gilbert",
+            "age": 75,
+            "nextTurn": 60,
+            "needsAssistance": false,
+            "hasInquiry": false
+        },
+        {
+            "name": "Hazel",
+            "age": 85,
+            "nextTurn": 30,
+            "needsAssistance": true,
+            "hasInquiry": false
+        }
+    ]
+}

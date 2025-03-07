@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { Chat, Description, Notifications } from "@mui/icons-material";

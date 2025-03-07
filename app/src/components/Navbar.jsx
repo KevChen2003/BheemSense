@@ -1,12 +1,13 @@
+import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
-import { Menu, Info, CameraAlt, NotificationsOff, Refresh, PowerSettingsNew } from "@mui/icons-material";
+import { Menu, Info, CameraAlt, NotificationsOff, Logout, PowerSettingsNew } from "@mui/icons-material";
 
 function Navbar() {
 
   return (
     <>
         {/* top navbar */}
-        <AppBar position='static' sx={{ backgroundColor:'#4C9BAE' }} >
+        <AppBar position='static' sx={{ backgroundColor:'#0094AE' }} >
         <Toolbar>
             <IconButton color='inherit'>
             <Menu />
@@ -24,7 +25,7 @@ function Navbar() {
             <NotificationsOff />
             </IconButton>
             <IconButton color='inherit'>
-            <Refresh />
+            <Logout />
             </IconButton>
             <IconButton color='inherit'>
             <PowerSettingsNew />
