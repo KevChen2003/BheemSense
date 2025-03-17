@@ -12,8 +12,6 @@ function Dashboard() {
     const theme = useTheme();
 
     const [data, setData] = useState("");
-    const [loading, setLoading] = useState(true); // initially loading should be true
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetch("/data/data.json")
@@ -26,12 +24,6 @@ function Dashboard() {
         })
         .then((data) => {
             setData(data);
-            setLoading(false);
-            console.log(data);
-        })
-        .catch((err) => {
-            setError(err.message);
-            setLoading(false);
         })
     }, []);
 

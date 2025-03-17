@@ -28,7 +28,7 @@ function PageTitle({ title }) {
                     flex: 1,
                     alignContent: 'center',
                 }}>
-                    <Search sx={{ fontSize: '30px', marginRight: '10px' }} />
+                    <Search sx={{ fontSize: '30px', marginRight: '20px' }} />
                     <FilterAltOutlined sx={{ fontSize: '30px' }} />
                 </Box>
             </Box>

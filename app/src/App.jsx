@@ -8,6 +8,7 @@ import Heatmap from './components/Heatmap';
 import Navbar from './components/NavBar';
 import Footbar from './components/Footbar';
 import Dashboard from './pages/Dashboard';
+import Tasks from './pages/Tasks';
 
 function App() {
     useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
                             {/* automatically navigate to dashboard */}
                             <Route path="/" element={<Navigate to="/dashboard" replace />} /> 
                             <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/tasks" element={<Tasks />} />
                         </Routes>
                     </div>
 
