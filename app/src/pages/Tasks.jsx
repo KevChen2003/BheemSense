@@ -91,13 +91,18 @@ function Tasks() {
             })
         }, []);
     
+    const handleModalSubmit = (modalData) => {
+        // add data to database too
+        setModalStatus(modalData.modalStatus);
+    }
+
     const handleModalClose = (modalData) => {
         setModalStatus(modalData.modalStatus);
-    }    
+    }
 
     return (
         <> 
-            {modalStatus && <TaskModal onClose={ handleModalClose }/>}
+            {modalStatus && <TaskModal onSubmit={ handleModalSubmit } onClose={handleModalClose} />}
             <PageTitle title={'Tasks'}/>
             <Box sx={{
                 width: '100vw',

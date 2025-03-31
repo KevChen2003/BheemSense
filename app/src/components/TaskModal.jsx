@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import './Modal.css';
-import { Box, Typography, IconButton, Switch, Button } from '@mui/material';
-import { Close, DataArray } from '@mui/icons-material';
+import { Box, Typography, IconButton, Switch, Button, TextField, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { Check, Close } from '@mui/icons-material';
 import { MultiSectionDigitalClock } from '@mui/x-date-pickers/MultiSectionDigitalClock';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import PropTypes from 'prop-types';
 // import { MultiSectionDigitalClock, AdapterDayjs, LocalizationProvider} from '@mui/x-date-pickers';
 
-function TaskModal({ onClose }) {
+const tags = ['cleanup', 'checkup', 'routine check'];
+const assignees = ['John', 'Jessie', 'Ron'];
+
+function TaskModal({ onSubmit, onClose }) {
     const [data, setData] = useState({
         modalStatus: true,
         urgent: false,
-        startTime: null
+        startTime: null,
+        endTime: null,
+        title: '',
+        description: '',
+        tags: [],
+        assignees: []
     });
 
     const handleClose = () => {
@@ -32,15 +41,38 @@ function TaskModal({ onClose }) {
         })
     }
 
-    const handleClockChange = (value) => {
+    const handleClockChange = (name, value) => {
         setData({
             ...data,
-            startTime: value
+            [name]: value
         });
+    }
+    
+    const handleLists = (event, item) => {
+        const { name, checked } = event.target;
+        // grab list from data
+        let updatedList = [...data[name]];
+        if (checked) {
+            updatedList.push(item);
+        } else {
+            // filter and keep items that aren't == item
+            updatedList = updatedList.filter((i) => i !== item);
+        }
+        setData({
+            ...data,
+            [name]: updatedList
+        })
     }
 
     const handleSubmit = (event) => {
-
+        event.preventDefault();
+        const modalCloseData = {
+            ...data, 
+            modalStatus: false
+        }
+        setData(modalCloseData);
+        // data state isn't updated immediately, so just use modalCloseData for immedaite close
+        onSubmit(modalCloseData);
     }
 
     return (
@@ -84,11 +116,107 @@ function TaskModal({ onClose }) {
                             <Typography variant='h6' flex='1' align='left' >Start Time</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <MultiSectionDigitalClock 
-                                    sx={{height: '80px', justifyContent: 'right'}}
+                                    sx={{height: '60px', justifyContent: 'right'}}
                                     value={data.startTime}
-                                    onChange={handleClockChange}
+                                    onChange={(value) => handleClockChange('startTime', value)}
                                 />
                             </LocalizationProvider>
+                        </Box>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '100%',
+                            marginTop: '20px'
+                        }}>
+                            <Typography variant='h6' flex='1' align='left' >End Time</Typography>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <MultiSectionDigitalClock 
+                                    sx={{height: '60px', justifyContent: 'right'}}
+                                    value={data.endTime}
+                                    onChange={(value) => handleClockChange('endTime', value)}
+                                />
+                            </LocalizationProvider>
+                        </Box>
+                        <TextField 
+                            name='title'
+                            label='Enter Title'
+                            variant='outlined'
+                            sx={{ marginTop: '20px' }}
+                            value={data.title}
+                            onChange={handleChange}
+                        />
+                        <TextField 
+                            name='description'
+                            label='Enter Task Description'
+                            variant='outlined'
+                            sx={{ marginTop: '20px' }}
+                            value={data.description}
+                            onChange={handleChange}
+                            multiline
+                        />
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '100%',
+                            marginTop: '20px'
+                        }}>
+                            <Typography variant='h6' flex='1' align='left' >Tags</Typography>
+                            <FormGroup 
+                                sx={{ maxHeight: '100px', overflow: 'auto' }}
+                            >
+                                <Box
+                                    sx={{ display: 'flex',
+                                        flexDirection: 'column'
+                                    }}
+                                >
+                                    {tags ? (
+                                        tags.map((tag, index) => (
+                                                <FormControlLabel 
+                                                    control={<Checkbox />} 
+                                                    label={tag} 
+                                                    key={index}
+                                                    name='tags'
+                                                    onChange={(e) => handleLists(e, tag)}
+                                                />
+                                            
+                                        ))
+                                    ) : (
+                                        <Typography>No tags</Typography>
+                                    )}
+                                </Box>
+                            </FormGroup>
+                        </Box>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '100%',
+                            marginTop: '20px'
+                        }}>
+                            <Typography variant='h6' flex='1.07' align='left' >Assignees</Typography>
+                            <FormGroup 
+                                sx={{ maxHeight: '100px', overflow: 'auto', flex: '1' }}
+                            >
+                                <Box
+                                    sx={{ display: 'flex',
+                                        flexDirection: 'column'
+                                    }}
+                                >
+                                    {assignees ? (
+                                        assignees.map((assignee, index) => (
+                                                <FormControlLabel 
+                                                    control={<Checkbox />} 
+                                                    label={assignee} 
+                                                    key={index}
+                                                    name='assignees'
+                                                    onChange={(e) => handleLists(e, assignee)}
+                                                />
+                                            
+                                        ))
+                                    ) : (
+                                        <Typography>No Assignees</Typography>
+                                    )}
+                                </Box>
+                            </FormGroup>
                         </Box>
                         <Button type='submit' variant='contained' color='primary' sx={{ marginTop: '20px' }}>Create Task</Button>
                     </Box>
@@ -97,5 +225,10 @@ function TaskModal({ onClose }) {
         </>
     )
 }
+
+TaskModal.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
+};
 
 export default TaskModal
