@@ -19,7 +19,7 @@ const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59);
 const timebar = [
     {
         id: 'time',
-        title: 'time',
+        title: ' ',
         cells: Array.from({length:24}, (_, i) => ({
             id: `time-${i}`,
             title: `${i}:00`,
@@ -31,10 +31,10 @@ const timebar = [
     }
 ];
 
-const tracks = [
+const sample_tracks = [
     {
         id: "track-1",
-        title: "track 1",
+        title: " ",
         elements: [
         {
             id: "task-1",
@@ -54,7 +54,7 @@ const tracks = [
     },
     {
         id: "track-2",
-        title: "track 2",
+        title: " ",
         elements: [
         {
             id: "task-3",
@@ -66,6 +66,15 @@ const tracks = [
         ],
     },
 ];
+
+const isValidJSON = (str) => {
+    try {
+        return JSON.parse(str);
+    } catch (e) {
+        // error occured, not JSON
+        return null; 
+    }
+}
   
 
 function Tasks() {
@@ -74,11 +83,23 @@ function Tasks() {
 
     const [zoom, setZoom] = useState(5);
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState("");
+    const [data, setData] = useState('');
     const [modalStatus, setModalStatus] = useState(false);
-    
-        useEffect(() => {
-            fetch("/data/data.json")
+
+    // load only on first mount, otherwise claling setdata will re-render, which will keep looping and calling setdata
+    useEffect(() => {
+        // get data from localstorage
+        const localStorageData = localStorage.getItem('data');
+        // check if localstorage has an item 'data', and check if the JSON in it is valid
+        const lsData = isValidJSON(localStorageData);
+        if (localStorageData && lsData != null) {
+            // problem in setData here, if set to the JSON it messes with the timeline on first render, 
+            // rerendering by pressing hte modal and cancelling it will fix it
+            // works when localStorage starts at empty
+            setData(lsData);
+        } else {
+            // if it doesnt exist in localstorage, get from local file
+            fetch("http://localhost:5173/data/data.json")
             .then((response) => {
                 if (!response.ok) {
                     console.log('error thrown');
@@ -87,13 +108,46 @@ function Tasks() {
                 return response.json();
             })
             .then((data) => {
+                localStorage.setItem('data', JSON.stringify(data));
                 setData(data);
-            })
-        }, []);
+            });
+        }
+    }, []);
+
+    // works but doesn't take from localStorage
+    // useEffect(() => {
+    //     fetch("http://localhost:5173/data/data.json")
+    //     .then((response) => {
+    //         if (!response.ok) {
+    //             console.log('error thrown');
+    //             throw new Error('Failed to fetch data');
+    //         }
+    //         return response.json();
+    //     })
+    //     .then((data) => {
+    //         // testing, still works so its not JSON.parse issue
+    //         // const a = JSON.stringify(data);
+    //         // const b = JSON.parse(a);
+    //         // setData(b);
+    //         setData(data);
+    //     })
+    // }, []);
     
     const handleModalSubmit = (modalData) => {
-        // add data to database too
         setModalStatus(modalData.modalStatus);
+        // add data to database too
+
+        // assigning track position (top or bottom), can either:
+        // * assign automatically to top, but assign to bottom track if time period is overlapping with one on top
+        //      * might be annoying as if they set a background task first (if it lasts a long period), it'll take up the entire top bar
+        // * let user choose (probs do this for now for customisability)
+        
+        delete modalData.modalStatus;
+        const newData = data;
+        newData.tasks.push(modalData);
+        // store in localstorage for now
+        localStorage.setItem('data', JSON.stringify(newData));
+        setData(newData);
     }
 
     const handleModalClose = (modalData) => {
@@ -107,8 +161,9 @@ function Tasks() {
             <Box sx={{
                 width: '100vw',
                 overflowX: 'scroll',
-                height: '28%',
-                overflowY: 'hidden',
+                // height: '28%',
+                height: '250px',
+                overflowY: 'scroll',
                 whiteSpace: 'nowrap',
                 borderRadius: '0 0 20px 20px',
                 boxShadow: 3
@@ -124,14 +179,14 @@ function Tasks() {
                         zoomIn={() => setZoom(Math.min(zoom + 1, 10))}
                         zoomOut={() => setZoom(Math.max(zoom - 1, 2))}
                         timebar={timebar} // Use pre-defined timebar
-                        tracks={tracks} // Use pre-defined tracks
+                        tracks={sample_tracks} // Use pre-defined tracks
                         now={now}
                         clickElement={(element) => alert(`Clicked: ${element.title}`)}
                         enableSticky
                         scrollToNow
-                        sx={{
-                            overflow: 'scroll'
-                        }}
+                        // sx={{
+                        //     overflow: 'scroll'
+                        // }}
                     />}
                 </Box>
             </Box>

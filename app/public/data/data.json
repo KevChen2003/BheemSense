@@ -280,5 +280,18 @@
             "needsAssistance": true,
             "hasInquiry": false
         }
+    ],
+    "tasks": [
+        { 
+            "urgent": false,
+            "startTime": null,
+            "endTime": null,
+            "title": "Sample Task 1",
+            "description": "Sample Task 1 Description",
+            "tags": ["sample demo"],
+            "assignees": [],
+            "trackNum": 1,
+            "taskColour": "#808080"
+        }
     ]
 }

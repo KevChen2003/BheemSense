@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './Modal.css';
-import { Box, Typography, IconButton, Switch, Button, TextField, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
-import { Check, Close } from '@mui/icons-material';
+import { Box, Typography, IconButton, Switch, Button, TextField, Checkbox, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, FormControl, Menu } from '@mui/material';
+import { Close } from '@mui/icons-material';
 import { MultiSectionDigitalClock } from '@mui/x-date-pickers/MultiSectionDigitalClock';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import PropTypes from 'prop-types';
+import { MuiColorInput } from 'mui-color-input'
 // import { MultiSectionDigitalClock, AdapterDayjs, LocalizationProvider} from '@mui/x-date-pickers';
 
 const tags = ['cleanup', 'checkup', 'routine check'];
@@ -20,7 +21,9 @@ function TaskModal({ onSubmit, onClose }) {
         title: '',
         description: '',
         tags: [],
-        assignees: []
+        assignees: [],
+        trackNum: 1,
+        taskColour: "#808080"
     });
 
     const handleClose = () => {
@@ -73,6 +76,13 @@ function TaskModal({ onSubmit, onClose }) {
         setData(modalCloseData);
         // data state isn't updated immediately, so just use modalCloseData for immedaite close
         onSubmit(modalCloseData);
+    }
+
+    const handleColourChange = (newValue) => {
+        setData({
+            ...data,
+            'taskColour': newValue
+        })
     }
 
     return (
@@ -217,6 +227,33 @@ function TaskModal({ onSubmit, onClose }) {
                                     )}
                                 </Box>
                             </FormGroup>
+                        </Box>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '100%',
+                            marginTop: '20px'
+                        }}>
+                            <Typography variant='h6' flex='1' align='left' >Task Track Position</Typography>
+                            <FormControl >
+                                <Select
+                                    onChange={handleChange}
+                                    value={data.trackNum}
+                                    name='trackNum'
+                                >
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '100%',
+                            marginTop: '20px'
+                        }}>
+                            <Typography variant='h6' flex='1' align='left' >Task Colour</Typography>
+                            <MuiColorInput format="hex" value={data.taskColour} onChange={handleColourChange} />
                         </Box>
                         <Button type='submit' variant='contained' color='primary' sx={{ marginTop: '20px' }}>Create Task</Button>
                     </Box>
