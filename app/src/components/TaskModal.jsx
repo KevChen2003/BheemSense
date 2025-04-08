@@ -12,10 +12,10 @@ import { MuiColorInput } from 'mui-color-input'
 const tags = ['cleanup', 'checkup', 'routine check'];
 const assignees = ['John', 'Jessie', 'Ron'];
 
-function TaskModal({ onSubmit, onClose }) {
+function TaskModal({ onSubmit, onClose, urgent }) {
     const [data, setData] = useState({
         modalStatus: true,
-        urgent: false,
+        urgent: urgent,
         startTime: null,
         endTime: null,
         title: '',
@@ -265,7 +265,8 @@ function TaskModal({ onSubmit, onClose }) {
 
 TaskModal.propTypes = {
     onSubmit: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
+    urgent: PropTypes.func.isRquired
 };
 
 export default TaskModal

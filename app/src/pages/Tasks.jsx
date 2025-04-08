@@ -75,6 +75,14 @@ const isValidJSON = (str) => {
         return null; 
     }
 }
+
+const dateToString = (dateTime) => {
+    const date = new Date(dateTime);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const timeString = `${hours}:${minutes}`;
+    return timeString;
+}
   
 
 function Tasks() {
@@ -84,6 +92,7 @@ function Tasks() {
     const [zoom, setZoom] = useState(5);
     const [open, setOpen] = useState(false);
     const [data, setData] = useState('');
+    const [urgent, setUrgent] = useState(false);
     const [modalStatus, setModalStatus] = useState(false);
 
     // load only on first mount, otherwise claling setdata will re-render, which will keep looping and calling setdata
@@ -113,7 +122,6 @@ function Tasks() {
             });
         }
     }, []);
-
     // works but doesn't take from localStorage
     // useEffect(() => {
     //     fetch("http://localhost:5173/data/data.json")
@@ -154,9 +162,54 @@ function Tasks() {
         setModalStatus(modalData.modalStatus);
     }
 
+    const getTracks = () => {
+        let tracks = [
+            {
+                id: "track-1",
+                title: " ",
+                elements: [],
+            },
+            {
+                id: "track-2",
+                title: " ",
+                elements: [],
+            },
+        ];
+
+        if (!data || !Array.isArray(data.tasks)) return tracks;
+        
+        for (const [index, task] of data.tasks.entries()) {
+            if (task.startTime == null) {
+                task.startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 11, 0);
+            }
+            if (task.endTime == null) {
+                task.endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13, 0);
+            }
+
+            if (task.trackNum == 1) {
+                tracks[0].elements.push({
+                    id: `task-${index}`,
+                    title: task.title,
+                    start: new Date(task.startTime),
+                    end: new Date(task.endTime),
+                    style: { backgroundColor: task.taskColour }
+                })
+            } else if (task.trackNum == 2) {
+                tracks[1].elements.push({
+                    id: `task-${index}`,
+                    title: task.title,
+                    start: new Date(task.startTime),
+                    end: new Date(task.endTime),
+                    style: { backgroundColor: task.taskColour }
+                })
+            }
+        }
+        return tracks;
+    }
+
     return (
         <> 
-            {modalStatus && <TaskModal onSubmit={ handleModalSubmit } onClose={handleModalClose} />}
+            {modalStatus && <TaskModal onSubmit={ handleModalSubmit } onClose={handleModalClose} urgent={urgent} />}
             <PageTitle title={'Tasks'}/>
             <Box sx={{
                 width: '100vw',
@@ -179,7 +232,7 @@ function Tasks() {
                         zoomIn={() => setZoom(Math.min(zoom + 1, 10))}
                         zoomOut={() => setZoom(Math.max(zoom - 1, 2))}
                         timebar={timebar} // Use pre-defined timebar
-                        tracks={sample_tracks} // Use pre-defined tracks
+                        tracks={getTracks()} // Use pre-defined tracks
                         now={now}
                         clickElement={(element) => alert(`Clicked: ${element.title}`)}
                         enableSticky
@@ -190,18 +243,108 @@ function Tasks() {
                     />}
                 </Box>
             </Box>
-            <Box sx={{ display: 'flex', width: '100vw', marginTop: '20px', color: 'red' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '100vw', height: '59%', marginTop: '20px' }}>
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'row',
                     width: '100%'
                 }}>
-                    <Typography align='left' variant='h5' sx={{ marginLeft: '20px', flex: 1 }} >Urgent Tasks</Typography>
+                    <Typography align='left' variant='h5' sx={{ marginLeft: '20px', flex: 1, color: 'red' }} >Urgent Tasks</Typography>
                     <IconButton sx={{ align: 'right', marginRight: '10px', marginTop: '-5px' }}
-                        onClick={() => setModalStatus(true)}>
+                        onClick={() => {
+                            setUrgent(true);
+                            setModalStatus(true);
+                        }}>
                             {/* AddBox button will still show, so set it to invisible when modal is open */}
                         <AddBox sx={{ color: 'red', opacity: modalStatus ? '0%' : '100%'}}/> 
                     </IconButton>
+                </Box>
+                <Box sx={{ height: '30%', overflow: 'scroll' }}>
+                    { data && data.tasks && data.tasks.filter((task) => task.urgent == true).length > 0 &&
+                        <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                width: '90%',
+                                height: '20%',
+                                margin: '5px auto',
+                                alignItems: 'center'
+                        }}>
+                            <Typography sx={{ flex: 3, fontSize: '10px', color: 'black' }}>Task Name</Typography>
+                            <Typography sx={{ flex: 1, fontSize: '10px', color: 'black' }}>Start Time</Typography>
+                            <Typography sx={{ flex: 1, fontSize: '10px', color: 'black' }}>End Time</Typography>
+                        </Box>
+                    }
+                    {data && data.tasks && data.tasks.filter((task) => task.urgent == true).length > 0 ? data.tasks
+                    .filter((task) => task.urgent == true)
+                    .map((task, index) => (
+                        <Box key={index} sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '90%',
+                            height: '20%',
+                            margin: '5px auto',
+                            borderRadius: '8px',
+                            backgroundColor: task.taskColour,
+                            alignItems: 'center'
+                        }}>
+                            <Typography sx={{ flex: 3, fontSize: '10px', color: 'black' }}>{task.title}</Typography>
+                            <Typography sx={{ flex: 1, fontSize: '10px', color: 'black' }}>{dateToString(task.startTime)}</Typography>
+                            <Typography sx={{ flex: 1, fontSize: '10px', color: 'black' }}>{dateToString(task.endTime)}</Typography>
+                        </Box>
+                    )) : (
+                        <Typography>No Urgent Tasks</Typography>
+                    )}
+                </Box>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '100%'
+                }}>
+                    <Typography align='left' variant='h5' sx={{ marginLeft: '20px', flex: 1, color: 'black' }} >Tasks</Typography>
+                    <IconButton sx={{ align: 'right', marginRight: '10px', marginTop: '-5px' }}
+                        onClick={() => {
+                            setUrgent(true);
+                            setModalStatus(true);
+                        }}>
+                            {/* AddBox button will still show, so set it to invisible when modal is open */}
+                        <AddBox sx={{ color: 'black', opacity: modalStatus ? '0%' : '100%'}}/> 
+                    </IconButton>
+                </Box>
+                <Box sx={{ height: '30%', overflow: 'scroll' }}>
+                    { data && data.tasks && data.tasks.filter((task) => task.urgent == false).length > 0 &&
+                        <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                width: '90%',
+                                height: '20%',
+                                margin: '5px auto',
+                                alignItems: 'center'
+                        }}>
+                            <Typography sx={{ flex: 3, fontSize: '10px', color: 'black' }}>Task Name</Typography>
+                            <Typography sx={{ flex: 1, fontSize: '10px', color: 'black' }}>Start Time</Typography>
+                            <Typography sx={{ flex: 1, fontSize: '10px', color: 'black' }}>End Time</Typography>
+                        </Box>
+                    }
+                    {data && data.tasks && data.tasks.filter((task) => task.urgent == false).length > 0 ? data.tasks
+                    .filter((task) => task.urgent == false)
+                    .map((task, index) => (
+                        <Box key={index} sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '90%',
+                            height: '20%',
+                            margin: '5px auto',
+                            borderRadius: '8px',
+                            backgroundColor: task.taskColour,
+                            alignItems: 'center'
+                        }}>
+                            <Typography sx={{ flex: 3, fontSize: '10px', color: 'black' }}>{task.title}</Typography>
+                            <Typography sx={{ flex: 1, fontSize: '10px', color: 'black' }}>{dateToString(task.startTime)}</Typography>
+                            <Typography sx={{ flex: 1, fontSize: '10px', color: 'black' }}>{dateToString(task.endTime)}</Typography>
+                        </Box>
+                    )) : (
+                        <Typography>No Urgent Tasks</Typography>
+                    )}
                 </Box>
             </Box>
         </>
