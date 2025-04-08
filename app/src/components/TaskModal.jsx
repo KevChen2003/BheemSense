@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Modal.css';
 import { Box, Typography, IconButton, Switch, Button, TextField, Checkbox, FormGroup, FormControlLabel, InputLabel, Select, MenuItem, FormControl, Menu } from '@mui/material';
 import { Close } from '@mui/icons-material';
@@ -25,7 +25,9 @@ function TaskModal({ onSubmit, onClose, urgent }) {
         trackNum: 1,
         taskColour: "#808080"
     });
-
+    const titleRef = useRef(null);
+    const descriptionRef = useRef(null);
+    const [focus, setFocus] = useState('');
     const handleClose = () => {
         const modalCloseData = {
             ...data, 
@@ -38,6 +40,9 @@ function TaskModal({ onSubmit, onClose, urgent }) {
 
     const handleChange = (event) => {
         const { name, value, type, checked } = event.target;
+        if (name == 'title' || name == 'description') {
+            setFocus(name);
+        }
         setData({
             ...data,
             [name]: type === 'checkbox' ? checked : value, // if of type "checkbox", including switch, store "checked", else store "value"
@@ -84,6 +89,15 @@ function TaskModal({ onSubmit, onClose, urgent }) {
             'taskColour': newValue
         })
     }
+
+    // Ensure focus is kept on title or description
+    useEffect(() => {
+        if (titleRef.current && focus == 'title') {
+            titleRef.current.focus(); // ensure title is focused
+        } else if (descriptionRef.current && focus == 'description') {
+            descriptionRef.current.focus(); // ensure description is focused
+        }
+    }, [data.title, data.description, focus]); // runs on title/description changes
 
     return (
         <>
@@ -154,6 +168,7 @@ function TaskModal({ onSubmit, onClose, urgent }) {
                             sx={{ marginTop: '20px' }}
                             value={data.title}
                             onChange={handleChange}
+                            inputRef={titleRef}
                         />
                         <TextField 
                             name='description'
@@ -162,6 +177,7 @@ function TaskModal({ onSubmit, onClose, urgent }) {
                             sx={{ marginTop: '20px' }}
                             value={data.description}
                             onChange={handleChange}
+                            inputRef={descriptionRef}
                             multiline
                         />
                         <Box sx={{

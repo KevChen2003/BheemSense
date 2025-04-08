@@ -303,7 +303,7 @@ function Tasks() {
                     <Typography align='left' variant='h5' sx={{ marginLeft: '20px', flex: 1, color: 'black' }} >Tasks</Typography>
                     <IconButton sx={{ align: 'right', marginRight: '10px', marginTop: '-5px' }}
                         onClick={() => {
-                            setUrgent(true);
+                            setUrgent(false);
                             setModalStatus(true);
                         }}>
                             {/* AddBox button will still show, so set it to invisible when modal is open */}
