@@ -64,9 +64,9 @@ function getAge() {
                 <img src='/data/heatmap.jpg' alt='heatmap' style={{ display: 'flex', flex: 1, width: '50vw' }}/>
                 <Box sx={{ display: 'flex', flex: 1 }}>
                     <Box sx={{ flexDirection: 'column'}}>
-                        <Typography>{patient.name}</Typography>
-                        <Typography>{getAge()} years old</Typography>
-                        <Typography>{patient.gender}</Typography>
+                        <Typography>Name: {patient.name}</Typography>
+                        <Typography>Age: {getAge()} years old</Typography>
+                        <Typography>Gender: {patient.gender}</Typography>
                         <Typography>Next Turn: {patient.nextTurn} mins</Typography>
                         {patient.needsAssistance ? (
                             <Typography sx={{ color: 'red' }}>Needs assistance</Typography>
