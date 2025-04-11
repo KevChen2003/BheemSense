@@ -35,9 +35,52 @@ function Dashboard() {
     if (!data || !data.patients || !data.patients[patientID - 1]) {
         return <Typography variant="h6" sx={{ padding: 2 }}>Loading patient data...</Typography>;
     }
+
+    const patient = data.patients[patientID - 1];
+
+
+function getAge() {
+    const dob = new Date(patient.DOB);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+
+    // Check if birthday has occurred yet this year
+    const hasHadBirthdayThisYear =
+        today.getMonth() > dob.getMonth() ||
+        (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+
+    if (!hasHadBirthdayThisYear) {
+        age--;
+    }
+
+    return age;
+}
+
     return (
         <> 
-            <PageTitle title={data.patients[patientID-1].name}/>
+            <PageTitle title={patient.name}/>
+            <Box sx={{ display: 'flex', flexDirection: 'row', height: '90%', alignItems: 'center' }}>
+                <img src='/data/heatmap.jpg' alt='heatmap' style={{ display: 'flex', flex: 1, width: '50vw' }}/>
+                <Box sx={{ display: 'flex', flex: 1 }}>
+                    <Box sx={{ flexDirection: 'column'}}>
+                        <Typography>{patient.name}</Typography>
+                        <Typography>{getAge()} years old</Typography>
+                        <Typography>{patient.gender}</Typography>
+                        <Typography>Next Turn: {patient.nextTurn} mins</Typography>
+                        {patient.needsAssistance ? (
+                            <Typography sx={{ color: 'red' }}>Needs assistance</Typography>
+                        ) : (
+                            <Typography sx={{ color: 'green' }}>Does not need assistance</Typography>
+                        )}
+                        {patient.hasInquiry ? (
+                            <Typography sx={{ color: '#8B8000' }}>Has inquiry</Typography>
+                        ) : (
+                            <Typography sx={{ color: 'green' }}>No inquiry</Typography>
+                        )}
+                    </Box>
+                </Box>
+            </Box>
         </>
     );
 }; 
