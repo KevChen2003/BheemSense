@@ -1,11 +1,17 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { useNavigate, useLocation } from "react-router-dom";
+import { Box, Typography, IconButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Search, FilterAltOutlined } from "@mui/icons-material";
+import { Search, FilterAltOutlined, ArrowBackIos } from "@mui/icons-material";
 import PropTypes from 'prop-types';
 
 function PageTitle({ title }) {
     const theme = useTheme();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // show back arrow only if in patient screen
+    const showBackArrow = location.pathname.includes("/patient");
 
     return (
         <> 
@@ -18,7 +24,13 @@ function PageTitle({ title }) {
                 display: 'flex',
                 flexDirection: 'row'
             }}>
-                <Box sx={{flex: 1}}/>
+                <Box sx={{flex: 1, textAlign: 'left', paddingLeft: '5px', fontSize: '30px' }}>
+                    { showBackArrow && (
+                        <IconButton onClick={() => {navigate(-1)}}>
+                            <ArrowBackIos />
+                        </IconButton>
+                    )}
+                </Box>
                 <Typography sx={{
                     fontWeight: 'bold',
                     fontSize: '30px',

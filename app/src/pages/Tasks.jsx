@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
 import { Box, Typography, IconButton } from '@mui/material';
 import { AddBox } from '@mui/icons-material';
+// import { Storage } from '@capacitor/storage';
 
 import Timeline from 'react-timelines';
 import "react-timelines/lib/css/style.css";
@@ -83,7 +84,26 @@ const dateToString = (dateTime) => {
     const timeString = `${hours}:${minutes}`;
     return timeString;
 }
-  
+
+// const storeData = async(data) => {
+//     try {
+//         await Storage.set({key: 'data', value: JSON.stringify(data)});
+//     } catch (error) {
+//         alert('Error storing data', error);
+//     }
+// }
+
+// const getData = async() => {
+//     try {
+//         const { value } = await Storage.get({ key: 'data' });
+//         if (value) {
+//             const data = JSON.parse(value);
+//             return data;
+//         }
+//     } catch (error) {
+//         alert('Error getting data', error);
+//     }
+// }
 
 function Tasks() {
     const navigate = useNavigate();
@@ -95,12 +115,41 @@ function Tasks() {
     const [urgent, setUrgent] = useState(false);
     const [modalStatus, setModalStatus] = useState(false);
 
+    // // apk version
+    // useEffect(() => {
+    //     // get data from localstorage
+    //     const appData = getData();
+        
+    //     if (appData) {
+    //         // problem in setData here, if set to the JSON it messes with the timeline on first render, 
+    //         // rerendering by pressing hte modal and cancelling it will fix it
+    //         // works when localStorage starts at empty
+    //         setData(appData);
+    //     } else {
+    //         // if it doesnt exist in localstorage, get from local file
+    //         fetch("/data/data.json")
+    //         .then((response) => {
+    //             if (!response.ok) {
+    //                 console.log('error thrown');
+    //                 throw new Error('Failed to fetch data');
+    //             }
+    //             return response.json();
+    //         })
+    //         .then((data) => {
+    //             storeData(data);
+    //             setData(data);
+    //         });
+    //     }
+    // }, []);
+
+    // web app version
     // load only on first mount, otherwise claling setdata will re-render, which will keep looping and calling setdata
     useEffect(() => {
         // get data from localstorage
         const localStorageData = localStorage.getItem('data');
         // check if localstorage has an item 'data', and check if the JSON in it is valid
         const lsData = isValidJSON(localStorageData);
+        
         if (localStorageData && lsData != null) {
             // problem in setData here, if set to the JSON it messes with the timeline on first render, 
             // rerendering by pressing hte modal and cancelling it will fix it
@@ -108,7 +157,7 @@ function Tasks() {
             setData(lsData);
         } else {
             // if it doesnt exist in localstorage, get from local file
-            fetch("http://localhost:5173/data/data.json")
+            fetch("/data/data.json")
             .then((response) => {
                 if (!response.ok) {
                     console.log('error thrown');
@@ -122,6 +171,7 @@ function Tasks() {
             });
         }
     }, []);
+
     // works but doesn't take from localStorage
     // useEffect(() => {
     //     fetch("http://localhost:5173/data/data.json")
@@ -155,6 +205,7 @@ function Tasks() {
         newData.tasks.push(modalData);
         // store in localstorage for now
         localStorage.setItem('data', JSON.stringify(newData));
+        // storeData(newData);
         setData(newData);
     }
 
@@ -179,6 +230,8 @@ function Tasks() {
         if (!data || !Array.isArray(data.tasks)) return tracks;
         
         for (const [index, task] of data.tasks.entries()) {
+            // if task has no start / end time (usually just for the task in the json file for testing)
+            // set the date to today from 11am to 1pm
             if (task.startTime == null) {
                 task.startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 11, 0);
             }

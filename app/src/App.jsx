@@ -5,10 +5,11 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import Heatmap from './components/Heatmap';
-import Navbar from './components/NavBar';
+import Navbar from './components/Navbar';
 import Footbar from './components/Footbar';
 import Dashboard from './pages/Dashboard';
 import Tasks from './pages/Tasks';
+import PatientPage from './pages/PatientPage';
 
 function App() {
     useEffect(() => {
@@ -27,6 +28,7 @@ function App() {
                             <Route path="/" element={<Navigate to="/dashboard" replace />} /> 
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/tasks" element={<Tasks />} />
+                            <Route path="/patient/:id" element={<PatientPage />} />
                         </Routes>
                     </div>
 

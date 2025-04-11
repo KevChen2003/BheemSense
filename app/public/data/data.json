@@ -1,280 +1,360 @@
 {
     "patients": [
         {
+            "patientID": 1,
             "name": "John",
+            "gender": "Male",
             "DOB": "1956-03-21",
             "nextTurn": 120,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 2,
             "name": "Margaret",
+            "gender": "Female",
             "DOB": "1952-07-14",
             "nextTurn": 90,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 3,
             "name": "Robert",
+            "gender": "Male",
             "DOB": "1939-11-05",
             "nextTurn": 30,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 4,
             "name": "Alice",
+            "gender": "Female",
             "DOB": "1946-02-28",
             "nextTurn": 150,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 5,
             "name": "George",
+            "gender": "Male",
             "DOB": "1944-09-12",
             "nextTurn": -10,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 6,
             "name": "Ethel",
+            "gender": "Female",
             "DOB": "1936-05-30",
             "nextTurn": 180,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 7,
             "name": "Harold",
+            "gender": "Male",
             "DOB": "1949-08-19",
             "nextTurn": 45,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 8,
             "name": "Dorothy",
+            "gender": "Female",
             "DOB": "1942-06-22",
             "nextTurn": 20,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 9,
             "name": "Frank",
+            "gender": "Male",
             "DOB": "1945-10-15",
             "nextTurn": 90,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 10,
             "name": "Edith",
+            "gender": "Female",
             "DOB": "1933-04-09",
             "nextTurn": 60,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 11,
             "name": "Walter",
+            "gender": "Male",
             "DOB": "1947-01-17",
             "nextTurn": -20,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 12,
             "name": "Mabel",
+            "gender": "Female",
             "DOB": "1940-12-03",
             "nextTurn": 30,
             "needsAssistance": true,
             "hasInquiry": true
         },
         {
+            "patientID": 13,
             "name": "Henry",
+            "gender": "Male",
             "DOB": "1950-09-27",
             "nextTurn": 180,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 14,
             "name": "Florence",
+            "gender": "Female",
             "DOB": "1935-07-16",
             "nextTurn": 120,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 15,
             "name": "Arthur",
+            "gender": "Male",
             "DOB": "1948-02-11",
             "nextTurn": 90,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 16,
             "name": "Sarah",
+            "gender": "Female",
             "DOB": "1955-05-24",
             "nextTurn": 150,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 17,
             "name": "Tom",
+            "gender": "Male",
             "DOB": "1947-03-08",
             "nextTurn": 110,
             "needsAssistance": true,
             "hasInquiry": false
         },
         {
+            "patientID": 18,
             "name": "Ruth",
+            "gender": "Female",
             "DOB": "1956-11-29",
             "nextTurn": 60,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 19,
             "name": "David",
+            "gender": "Male",
             "DOB": "1939-08-06",
             "nextTurn": 140,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 20,
             "name": "Isabel",
+            "gender": "Female",
             "DOB": "1941-10-03",
             "nextTurn": 30,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 21,
             "name": "Catherine",
+            "gender": "Female",
             "DOB": "1944-01-25",
             "nextTurn": 170,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 22,
             "name": "Paul",
+            "gender": "Male",
             "DOB": "1943-06-12",
             "nextTurn": 45,
             "needsAssistance": true,
             "hasInquiry": true
         },
         {
+            "patientID": 23,
             "name": "Stanley",
+            "gender": "Male",
             "DOB": "1938-04-14",
             "nextTurn": 90,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 24,
             "name": "Lily",
+            "gender": "Female",
             "DOB": "1952-09-21",
             "nextTurn": 120,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 25,
             "name": "James",
+            "gender": "Male",
             "DOB": "1946-12-30",
             "nextTurn": 180,
             "needsAssistance": true,
             "hasInquiry": false
         },
         {
+            "patientID": 26,
             "name": "Beryl",
+            "gender": "Female",
             "DOB": "1934-07-05",
             "nextTurn": 30,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 27,
             "name": "Elsie",
+            "gender": "Female",
             "DOB": "1950-02-14",
             "nextTurn": 60,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 28,
             "name": "Grace",
+            "gender": "Female",
             "DOB": "1942-05-28",
             "nextTurn": 180,
             "needsAssistance": true,
             "hasInquiry": false
         },
         {
+            "patientID": 29,
             "name": "Norman",
+            "gender": "Male",
             "DOB": "1941-09-30",
             "nextTurn": 150,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 30,
             "name": "Oliver",
+            "gender": "Male",
             "DOB": "1948-06-17",
             "nextTurn": 45,
             "needsAssistance": true,
             "hasInquiry": false
         },
         {
+            "patientID": 31,
             "name": "Doris",
+            "gender": "Female",
             "DOB": "1945-11-23",
             "nextTurn": 110,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 32,
             "name": "Edgar",
+            "gender": "Male",
             "DOB": "1954-04-07",
             "nextTurn": 30,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 33,
             "name": "May",
+            "gender": "Female",
             "DOB": "1936-08-10",
             "nextTurn": 150,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 34,
             "name": "Vera",
+            "gender": "Female",
             "DOB": "1948-03-19",
             "nextTurn": 120,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 35,
             "name": "Albert",
+            "gender": "Male",
             "DOB": "1939-12-27",
             "nextTurn": 30,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 36,
             "name": "Ellen",
+            "gender": "Female",
             "DOB": "1943-05-09",
             "nextTurn": 90,
             "needsAssistance": false,
             "hasInquiry": false
         },
         {
+            "patientID": 37,
             "name": "Hugh",
+            "gender": "Male",
             "DOB": "1951-01-30",
             "nextTurn": 45,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 38,
             "name": "Leo",
+            "gender": "Male",
             "DOB": "1942-11-12",
             "nextTurn": 90,
             "needsAssistance": true,
             "hasInquiry": false
         },
         {
+            "patientID": 39,
             "name": "Josephine",
+            "gender": "Female",
             "DOB": "1934-09-26",
             "nextTurn": 30,
             "needsAssistance": false,
             "hasInquiry": true
         },
         {
+            "patientID": 40,
             "name": "Victor",
+            "gender": "Male",
             "DOB": "1950-06-18",
             "nextTurn": 180,
             "needsAssistance": true,
@@ -283,6 +363,7 @@
     ],
     "tasks": [
         { 
+            "taskID": 1,
             "urgent": false,
             "startTime": null,
             "endTime": null,

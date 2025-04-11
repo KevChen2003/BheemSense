@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BheemSense</string>
+    <string name="title_activity_main">BheemSense</string>
+    <string name="package_name">com.BheemSense.app</string>
+    <string name="custom_url_scheme">com.BheemSense.app</string>
+</resources>

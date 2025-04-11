@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
 import PageTitle from '../components/PageTitle';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, IconButton } from '@mui/material';
 import { PersonOutlineOutlined, BookmarkBorderOutlined, CheckBoxOutlined } from '@mui/icons-material';
 
 
@@ -50,6 +50,10 @@ function Dashboard() {
         }
     };
 
+    const goToPatient = (patientID) => {
+        navigate(`/patient/${patientID}`);
+    }
+
     return (
         <> 
             <PageTitle title={'Dashboard'}/>
@@ -75,9 +79,15 @@ function Dashboard() {
                             }}>
                                 <Typography sx={{ flex: 6, fontSize: '20px' }}>{patient.name}</Typography>
                                 <Box sx={{ display: 'flex', flex: 3, alignItems: 'center', gap: '20px' }}>
-                                    <CheckBoxOutlined sx={{ fontSize: '30px' }}/>
-                                    <PersonOutlineOutlined sx={{ fontSize: '30px' }}/>
-                                    <BookmarkBorderOutlined sx={{ fontSize: '30px' }}/>
+                                    <IconButton sx={{ color: 'black' }}>
+                                        <CheckBoxOutlined sx={{ fontSize: '30px' }}/>
+                                    </IconButton>
+                                    <IconButton sx={{ color: 'black' }} onClick={() => {goToPatient(patient.patientID)}}>
+                                        <PersonOutlineOutlined sx={{ fontSize: '30px' }}/> 
+                                    </IconButton>
+                                    <IconButton sx={{ color: 'black' }}>
+                                        <BookmarkBorderOutlined sx={{ fontSize: '30px' }}/>
+                                    </IconButton>
                                 </Box>
                             </Box>
                         </Box>
