@@ -12,6 +12,8 @@ import "react-timelines/lib/css/style.css";
 import PageTitle from '../components/PageTitle';
 import TaskModal from '../components/TaskModal';
 
+// import * as SQLite from 'expo-sqlite';
+
 
 const now = new Date();
 const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0);
@@ -142,6 +144,39 @@ function Tasks() {
     //     }
     // }, []);
 
+    // // sqlite
+    // useEffect(() => {
+        
+    //     const loadDB = async () => {
+    //         const db = await SQLite.openDatabaseAsync('data');
+
+    //         const result = await db.getFirstAsync('SELECT COUNT(*) AS count FROM data'); 
+
+    //         const dbData = await db.getAllAsync('SELECT * FROM data');
+
+    //         if (result.count !== 0) {
+    //             setData(JSON.stringify(dbData));
+    //         } else {
+    //             // if it doesnt exist in localstorage, get from local file
+    //             fetch("/data/data.json")
+    //             .then((response) => {
+    //                 if (!response.ok) {
+    //                     console.log('error thrown');
+    //                     throw new Error('Failed to fetch data');
+    //                 }
+    //                 return response.json();
+    //             })
+    //             .then((data) => {
+    //                 // set data into DB
+    //                 // localStorage.setItem('data', JSON.stringify(data));
+    //                 setData(data);
+    //             });
+    //         }
+    //     }
+        
+    //     loadDB();
+    // }, []);
+
     // web app version
     // load only on first mount, otherwise claling setdata will re-render, which will keep looping and calling setdata
     useEffect(() => {
@@ -202,6 +237,7 @@ function Tasks() {
         
         delete modalData.modalStatus;
         const newData = data;
+        console.log(modalData);
         newData.tasks.push(modalData);
         // store in localstorage for now
         localStorage.setItem('data', JSON.stringify(newData));

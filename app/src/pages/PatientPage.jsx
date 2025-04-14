@@ -6,6 +6,8 @@ import PageTitle from '../components/PageTitle';
 import { Box, Typography, IconButton } from '@mui/material';
 import { PersonOutlineOutlined, BookmarkBorderOutlined, CheckBoxOutlined } from '@mui/icons-material';
 
+import Heatmap from '../components/Heatmap';
+
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -62,6 +64,9 @@ function getAge() {
             <PageTitle title={patient.name}/>
             <Box sx={{ display: 'flex', flexDirection: 'row', height: '90%', alignItems: 'center' }}>
                 <img src='/data/heatmap.jpg' alt='heatmap' style={{ display: 'flex', flex: 1, width: '50vw' }}/>
+                {/* <Box sx={{ display: 'flex', flexDirection: 'row', height: '90%', alignItems: 'center', width: '50vw'}}>
+                    <Heatmap />
+                </Box> */}
                 <Box sx={{ display: 'flex', flex: 1 }}>
                     <Box sx={{ flexDirection: 'column'}}>
                         <Typography>Name: {patient.name}</Typography>
