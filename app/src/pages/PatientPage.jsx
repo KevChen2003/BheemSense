@@ -38,24 +38,6 @@ function PatientPage() {
 
     const patient = data.patients[patientID - 1];
 
-    function getAge() {
-        const dob = new Date(patient.DOB);
-        const today = new Date();
-
-        let age = today.getFullYear() - dob.getFullYear();
-
-        // Check if birthday has occurred yet this year
-        const hasHadBirthdayThisYear =
-            today.getMonth() > dob.getMonth() ||
-            (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
-
-        if (!hasHadBirthdayThisYear) {
-            age--;
-        }
-
-        return age;
-    }
-
     return (
         <> 
             <PageTitle title={patient.name}/>

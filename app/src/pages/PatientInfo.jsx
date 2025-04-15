@@ -85,6 +85,7 @@ function PatientInfo() {
                                     marginLeft: 'auto', // Push to right side of grid cell
                                     gap: '5px'
                                 }}
+                                onClick={() => {navigate(`/patient/${patientID}/info/allergies`)}}
                         >
                             <Typography sx={{color: '#9F9F9F'}}>{patient.allergies.length === 0 ? 'None' : 'View Allergies'}</Typography>
                             <ArrowForwardIos sx={{fontSize: '14px'}}/>
@@ -102,6 +103,7 @@ function PatientInfo() {
                                     marginLeft: 'auto', // Push to right side of grid cell
                                     gap: '5px'
                                 }}
+                                onClick={() => {navigate(`/patient/${patientID}/info/conditions`)}}
                         >
                             <Typography sx={{color: '#9F9F9F'}}>{patient.conditions.length === 0 ? 'None' : 'View Conditions'}</Typography>
                             <ArrowForwardIos sx={{fontSize: '14px'}}/>

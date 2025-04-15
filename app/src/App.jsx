@@ -11,6 +11,8 @@ import Dashboard from './pages/Dashboard';
 import Tasks from './pages/Tasks';
 import PatientPage from './pages/PatientPage';
 import PatientInfo from './pages/PatientInfo';
+import Allergies from './pages/Allergies';
+import Conditions from './pages/Conditions';
 
 function App() {
     useEffect(() => {
@@ -31,6 +33,8 @@ function App() {
                             <Route path="/tasks" element={<Tasks />} />
                             <Route path="/patient/:id" element={<PatientPage />} />
                             <Route path="/patient/:id/info" element={<PatientInfo />} />
+                            <Route path="/patient/:id/info/allergies" element={<Allergies />} />
+                            <Route path="/patient/:id/info/conditions" element={<Conditions />} />
                         </Routes>
                     </div>
 
