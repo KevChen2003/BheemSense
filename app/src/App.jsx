@@ -10,6 +10,7 @@ import Footbar from './components/Footbar';
 import Dashboard from './pages/Dashboard';
 import Tasks from './pages/Tasks';
 import PatientPage from './pages/PatientPage';
+import PatientInfo from './pages/PatientInfo';
 
 function App() {
     useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/tasks" element={<Tasks />} />
                             <Route path="/patient/:id" element={<PatientPage />} />
+                            <Route path="/patient/:id/info" element={<PatientInfo />} />
                         </Routes>
                     </div>
 

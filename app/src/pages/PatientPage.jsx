@@ -3,13 +3,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
 import PageTitle from '../components/PageTitle';
-import { Box, Typography, IconButton } from '@mui/material';
-import { PersonOutlineOutlined, BookmarkBorderOutlined, CheckBoxOutlined } from '@mui/icons-material';
-
-import Heatmap from '../components/Heatmap';
+import { Box, Typography, Button } from '@mui/material';
+import { MenuBook, Feed, Medication, WarningAmber } from '@mui/icons-material';
 
 
-function Dashboard() {
+function PatientPage() {
     const navigate = useNavigate();
     const theme = useTheme();
 
@@ -40,34 +38,33 @@ function Dashboard() {
 
     const patient = data.patients[patientID - 1];
 
+    function getAge() {
+        const dob = new Date(patient.DOB);
+        const today = new Date();
 
-function getAge() {
-    const dob = new Date(patient.DOB);
-    const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
 
-    let age = today.getFullYear() - dob.getFullYear();
+        // Check if birthday has occurred yet this year
+        const hasHadBirthdayThisYear =
+            today.getMonth() > dob.getMonth() ||
+            (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
 
-    // Check if birthday has occurred yet this year
-    const hasHadBirthdayThisYear =
-        today.getMonth() > dob.getMonth() ||
-        (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+        if (!hasHadBirthdayThisYear) {
+            age--;
+        }
 
-    if (!hasHadBirthdayThisYear) {
-        age--;
+        return age;
     }
-
-    return age;
-}
 
     return (
         <> 
             <PageTitle title={patient.name}/>
-            <Box sx={{ display: 'flex', flexDirection: 'row', height: '90%', alignItems: 'center' }}>
-                <img src='/data/heatmap.jpg' alt='heatmap' style={{ display: 'flex', flex: 1, width: '50vw' }}/>
-                {/* <Box sx={{ display: 'flex', flexDirection: 'row', height: '90%', alignItems: 'center', width: '50vw'}}>
-                    <Heatmap />
-                </Box> */}
-                <Box sx={{ display: 'flex', flex: 1 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', height: '75%' }}>
+                <img src='/data/heatmap.jpg' alt='heatmap' style={{ display: 'flex', flex: 1, height: '100%', width: '50vw' }}/>
+
+                <img src='/data/graphs.jpg' alt='data' style={{ display: 'flex', flex: 1, height: '100%', width: '50vw' }}/>
+
+                {/* <Box sx={{ display: 'flex', flex: 1 }}>
                     <Box sx={{ flexDirection: 'column'}}>
                         <Typography>Name: {patient.name}</Typography>
                         <Typography>Age: {getAge()} years old</Typography>
@@ -84,10 +81,31 @@ function getAge() {
                             <Typography sx={{ color: 'green' }}>No inquiry</Typography>
                         )}
                     </Box>
-                </Box>
+                </Box> */}
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'row', height: '11.5%' }}>
+                {/* buttons */}
+                <Button sx={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%', backgroundColor: '#0084FF', borderRadius: '15px', textTransform: 'none' }}>
+                    <MenuBook sx={{ color: 'white', width: '80%', height: '80%' }} />
+                    <Typography sx={{ color: 'white', fontSize: '10px' }}>Turn History</Typography>
+                </Button>
+                <Button sx={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%', backgroundColor: '#00B50C', borderRadius: '15px', textTransform: 'none' }}
+                        onClick={() => {navigate(`/patient/${patientID}/info`)}}
+                >
+                    <Feed sx={{ color: 'white', width: '80%', height: '80%' }} />
+                    <Typography sx={{ color: 'white', fontSize: '10px' }}>Patient Info</Typography>
+                </Button>
+                <Button sx={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%', backgroundColor: '#E4D900', borderRadius: '15px', textTransform: 'none' }}>
+                    <Medication sx={{ color: 'white', width: '80%', height: '80%' }} />
+                    <Typography sx={{ color: 'white', fontSize: '10px' }}>Medications</Typography>
+                </Button>
+                <Button sx={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%', backgroundColor: '#FD4040', borderRadius: '15px', textTransform: 'none' }}>
+                    <WarningAmber sx={{ color: 'white', width: '80%', height: '80%' }} />
+                    <Typography sx={{ color: 'white', fontSize: '10px' }}>Emergency</Typography>
+                </Button>
             </Box>
         </>
     );
 }; 
 
-export default Dashboard;
+export default PatientPage;
