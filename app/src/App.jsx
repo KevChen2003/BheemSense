@@ -4,7 +4,7 @@ import './App.css';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
-import Heatmap from './components/Heatmap';
+// import Heatmap from './components/Heatmap';
 import Navbar from './components/Navbar';
 import Footbar from './components/Footbar';
 import Dashboard from './pages/Dashboard';
@@ -13,6 +13,7 @@ import PatientPage from './pages/PatientPage';
 import PatientInfo from './pages/PatientInfo';
 import Allergies from './pages/Allergies';
 import Conditions from './pages/Conditions';
+import WaterlowScale from './pages/WaterlowScale';
 
 function App() {
     useEffect(() => {
@@ -35,6 +36,7 @@ function App() {
                             <Route path="/patient/:id/info" element={<PatientInfo />} />
                             <Route path="/patient/:id/info/allergies" element={<Allergies />} />
                             <Route path="/patient/:id/info/conditions" element={<Conditions />} />
+                            <Route path="/patient/:id/waterlow-scale" element={<WaterlowScale />} />
                         </Routes>
                     </div>
 

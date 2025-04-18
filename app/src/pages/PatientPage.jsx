@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
 import PageTitle from '../components/PageTitle';
 import { Box, Typography, Button } from '@mui/material';
-import { MenuBook, Feed, Medication, WarningAmber } from '@mui/icons-material';
+import { MenuBook, Feed, Medication, Quiz } from '@mui/icons-material';
 
 
 function PatientPage() {
@@ -81,9 +81,11 @@ function PatientPage() {
                     <Medication sx={{ color: 'white', width: '80%', height: '80%' }} />
                     <Typography sx={{ color: 'white', fontSize: '10px' }}>Medications</Typography>
                 </Button>
-                <Button sx={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%', backgroundColor: '#FD4040', borderRadius: '15px', textTransform: 'none' }}>
-                    <WarningAmber sx={{ color: 'white', width: '80%', height: '80%' }} />
-                    <Typography sx={{ color: 'white', fontSize: '10px' }}>Emergency</Typography>
+                <Button sx={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%', backgroundColor: '#FD4040', borderRadius: '15px', textTransform: 'none' }}
+                        onClick={() => {navigate(`/patient/${patientID}/waterlow-scale`)}}
+                >
+                    <Quiz sx={{ color: 'white', width: '80%', height: '80%' }} />
+                    <Typography sx={{ color: 'white', fontSize: '10px' }}>Waterlow Scale</Typography>
                 </Button>
             </Box>
         </>
