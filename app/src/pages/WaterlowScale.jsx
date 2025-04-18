@@ -56,12 +56,28 @@ function WaterlowScale() {
 
     }
 
-    const handleChange = () => {
-
+    const handleChange = (event) => {
+        const { name, value, type, checked } = event.target;
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value, // if of type "checkbox", including switch, store "checked", else store "value"
+        })
     }
 
-    const handleCheckboxChange = () => {
-
+    const handleCheckboxChange = (event, item) => {
+        const { name, checked } = event.target;
+        // grab list from data
+        let updatedList = [...formData[name]];
+        if (checked) {
+            updatedList.push(item);
+        } else {
+            // filter and keep items that aren't == item
+            updatedList = updatedList.filter((i) => i !== item);
+        }
+        setFormData({
+            ...data,
+            [name]: updatedList
+        })
     }
 
     return (
@@ -155,6 +171,7 @@ function WaterlowScale() {
                             ].map((option) => (
                             <FormControlLabel
                                 key={option.value}
+                                name='visualAssessment'
                                 control={
                                 <Checkbox
                                     checked={formData.visualAssessment.includes(option.value)}
