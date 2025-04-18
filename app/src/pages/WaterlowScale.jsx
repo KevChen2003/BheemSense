@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import PageTitle from '../components/PageTitle';
 import { Box, Typography, Button, TextField, FormControl, FormLabel, RadioGroup, Radio, FormControlLabel, Checkbox, FormGroup } from '@mui/material';
 import { } from '@mui/icons-material';
-import { getSectionOrder } from '@mui/x-date-pickers/internals/hooks/useField/useField.utils';
 
 
 function WaterlowScale() {
