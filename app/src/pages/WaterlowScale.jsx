@@ -24,7 +24,7 @@ function WaterlowScale() {
         visualAssessment: [],
         mobility: '',
         continence: '',
-        tissueMalnutrition: ''
+        tissueMalnutrition: '' // the form is technically unfinished but can't find it, might just use this for now
     });
 
     const { id } = useParams();
@@ -52,8 +52,14 @@ function WaterlowScale() {
 
     const patient = data.patients[patientID - 1];
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault(); // prevents page from refreshing after submission
 
+        // on submit, put data onto formData onto backend here, not doing for now 
+        // could put in patients.waterlow
+
+        console.log(formData);
+        console.log('Submitted');
     }
 
     const handleChange = (event) => {
@@ -75,7 +81,7 @@ function WaterlowScale() {
             updatedList = updatedList.filter((i) => i !== item);
         }
         setFormData({
-            ...data,
+            ...formData,
             [name]: updatedList
         })
     }
@@ -85,7 +91,7 @@ function WaterlowScale() {
             <PageTitle title={patient.name}/>
             <Box sx={{ display: 'flex', height: '86.4%', flexDirection: 'column', width: '100vw', overflow: 'scroll', padding: '20px', gap: '20px' }}>
                 <Typography variant='h5' align='left'>Waterlow Scale Survey</Typography>
-                <Box component='form' onSubmit={handleSubmit}
+                <Box component='form' onSubmit={(e) => handleSubmit(e)}
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
