@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
 import { Box, Typography, IconButton } from '@mui/material';
 import { AddBox } from '@mui/icons-material';
-// import { Storage } from '@capacitor/storage';
 
 import Timeline from 'react-timelines';
 import "react-timelines/lib/css/style.css";
@@ -12,7 +11,7 @@ import "react-timelines/lib/css/style.css";
 import PageTitle from '../components/PageTitle';
 import TaskModal from '../components/TaskModal';
 
-// import SQLite from 'react-native-sqlite-storage';
+import SQLite from 'react-native-sqlite-storage';
 
 // const db = SQLite.openDatabase(
 //     {
@@ -22,6 +21,25 @@ import TaskModal from '../components/TaskModal';
 //     () => {},
 //     (error) => { console.log(error) }
 // );
+
+// const createTaskTable = () => {
+//     db.transaction((tx) => {
+//         tx.executeSql(
+//             `CREATE TABLE IF NOT EXISTS Tasks (
+//                 taskID INTEGER PRIMARY KEY, 
+//                 urgent BOOLEAN,
+//                 startTime TEXT,
+//                 endTime TEXT,
+//                 title TEXT,
+//                 description TEXT,
+//                 tags TEXT,
+//                 assignees TEXT,
+//                 trackNum INTEGER, 
+//                 taskColour TEXT
+//             )`
+//         )
+//     })
+// }
 
 
 const now = new Date();
@@ -96,26 +114,6 @@ const dateToString = (dateTime) => {
     return timeString;
 }
 
-// const storeData = async(data) => {
-//     try {
-//         await Storage.set({key: 'data', value: JSON.stringify(data)});
-//     } catch (error) {
-//         alert('Error storing data', error);
-//     }
-// }
-
-// const getData = async() => {
-//     try {
-//         const { value } = await Storage.get({ key: 'data' });
-//         if (value) {
-//             const data = JSON.parse(value);
-//             return data;
-//         }
-//     } catch (error) {
-//         alert('Error getting data', error);
-//     }
-// }
-
 function Tasks() {
     const navigate = useNavigate();
     const theme = useTheme();
@@ -126,65 +124,95 @@ function Tasks() {
     const [urgent, setUrgent] = useState(false);
     const [modalStatus, setModalStatus] = useState(false);
 
-    // // apk version
-    // useEffect(() => {
-    //     // get data from localstorage
-    //     const appData = getData();
+    // sqlite
+    useEffect(() => {
         
-    //     if (appData) {
-    //         // problem in setData here, if set to the JSON it messes with the timeline on first render, 
-    //         // rerendering by pressing hte modal and cancelling it will fix it
-    //         // works when localStorage starts at empty
-    //         setData(appData);
-    //     } else {
-    //         // if it doesnt exist in localstorage, get from local file
-    //         fetch("/data/data.json")
-    //         .then((response) => {
-    //             if (!response.ok) {
-    //                 console.log('error thrown');
-    //                 throw new Error('Failed to fetch data');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then((data) => {
-    //             storeData(data);
-    //             setData(data);
-    //         });
-    //     }
-    // }, []);
+        // const loadDB = async () => {
+        //     const db = await SQLite.openDatabaseAsync('data');
 
-    // // sqlite
-    // useEffect(() => {
-        
-    //     const loadDB = async () => {
-    //         const db = await SQLite.openDatabaseAsync('data');
+        //     const result = await db.getFirstAsync('SELECT COUNT(*) AS count FROM data'); 
 
-    //         const result = await db.getFirstAsync('SELECT COUNT(*) AS count FROM data'); 
+        //     const dbData = await db.getAllAsync('SELECT * FROM data');
 
-    //         const dbData = await db.getAllAsync('SELECT * FROM data');
+        //     if (result.count !== 0) {
+        //         setData(JSON.stringify(dbData));
+        //     } else {
+        //         // if it doesnt exist in localstorage, get from local file
+        //         fetch("/data/data.json")
+        //         .then((response) => {
+        //             if (!response.ok) {
+        //                 console.log('error thrown');
+        //                 throw new Error('Failed to fetch data');
+        //             }
+        //             return response.json();
+        //         })
+        //         .then((data) => {
+        //             // set data into DB
+        //             // localStorage.setItem('data', JSON.stringify(data));
+        //             setData(data);
+        //         });
+        //     }
+        // }
+        // loadDB();
 
-    //         if (result.count !== 0) {
-    //             setData(JSON.stringify(dbData));
-    //         } else {
-    //             // if it doesnt exist in localstorage, get from local file
-    //             fetch("/data/data.json")
-    //             .then((response) => {
-    //                 if (!response.ok) {
-    //                     console.log('error thrown');
-    //                     throw new Error('Failed to fetch data');
-    //                 }
-    //                 return response.json();
-    //             })
-    //             .then((data) => {
-    //                 // set data into DB
-    //                 // localStorage.setItem('data', JSON.stringify(data));
-    //                 setData(data);
-    //             });
-    //         }
-    //     }
-        
-    //     loadDB();
-    // }, []);
+        const loadDB = async () => {
+            const db = await SQLite.openDatabase(
+                {
+                    name: 'MainDB',
+                    location: 'default'
+                },
+                () => {},
+                (error) => { console.log(error) }
+            );
+            
+            // create table for Tasks if it doesn't exist already
+            await db.transaction(async (tx) => {
+                await tx.executeSql(
+                    `CREATE TABLE IF NOT EXISTS Tasks (
+                        taskID INTEGER PRIMARY KEY, 
+                        urgent BOOLEAN,
+                        startTime TEXT,
+                        endTime TEXT,
+                        title TEXT,
+                        description TEXT,
+                        tags TEXT,
+                        assignees TEXT,
+                        trackNum INTEGER, 
+                        taskColour TEXT
+                    )`
+                )
+            });
+
+            let result;
+
+            await db.transaction(async (tx) => {
+                await tx.executeSql("SELECT COUNT(*) AS count FROM Tasks",
+                    [],
+                    (tx, results) => {
+                        result = results.rows.item(0).count;
+                    }
+                )
+            });
+
+            let dbData;
+            await db.transaction(async (tx) => {
+                await tx.executeSql("SELECT * FROM Tasks",
+                    [],
+                    (tx, results) => {
+                        const rows = results.rows;
+                        const tempData = [];
+
+                        for (let i = 0; i < rows.length; i++) {
+                            tempData.push(rows.item(i));
+                        }
+
+                        // tempData will be a list of {id: 1, name: ..., etc}
+                        // so will need to structure into dbData
+                    }
+                )
+            });
+        }
+    }, []);
 
     // web app version
     // load only on first mount, otherwise claling setdata will re-render, which will keep looping and calling setdata
