@@ -120,7 +120,8 @@ function Tasks() {
 
     const [zoom, setZoom] = useState(5);
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState('');
+    const [db, setDb] = useState(null);
+    const [data, setData] = useState([]);
     const [urgent, setUrgent] = useState(false);
     const [modalStatus, setModalStatus] = useState(false);
 
@@ -134,35 +135,35 @@ function Tasks() {
 
         //     const dbData = await db.getAllAsync('SELECT * FROM data');
 
-        //     if (result.count !== 0) {
-        //         setData(JSON.stringify(dbData));
-        //     } else {
-        //         // if it doesnt exist in localstorage, get from local file
-        //         fetch("/data/data.json")
-        //         .then((response) => {
-        //             if (!response.ok) {
-        //                 console.log('error thrown');
-        //                 throw new Error('Failed to fetch data');
-        //             }
-        //             return response.json();
-        //         })
-        //         .then((data) => {
-        //             // set data into DB
-        //             // localStorage.setItem('data', JSON.stringify(data));
-        //             setData(data);
-        //         });
-        //     }
+            // if (result.count !== 0) {
+            //     setData(JSON.stringify(dbData));
+            // } else {
+            //     // if it doesnt exist in localstorage, get from local file
+            //     fetch("/data/data.json")
+            //     .then((response) => {
+            //         if (!response.ok) {
+            //             console.log('error thrown');
+            //             throw new Error('Failed to fetch data');
+            //         }
+            //         return response.json();
+            //     })
+            //     .then((data) => {
+            //         // set data into DB
+            //         // localStorage.setItem('data', JSON.stringify(data));
+            //         setData(data);
+            //     });
+            // }
         // }
         // loadDB();
 
         const loadDB = async () => {
-            const db = await SQLite.openDatabase(
+            await SQLite.openDatabase(
                 {
                     name: 'MainDB',
                     location: 'default'
                 },
-                () => {},
-                (error) => { console.log(error) }
+                (dbInstance) => { setDb(dbInstance) },
+                (error) => { console.error('Error opening database', error) }
             );
             
             // create table for Tasks if it doesn't exist already
@@ -183,13 +184,19 @@ function Tasks() {
                 )
             });
 
-            let result;
+            let count;
 
             await db.transaction(async (tx) => {
                 await tx.executeSql("SELECT COUNT(*) AS count FROM Tasks",
                     [],
                     (tx, results) => {
-                        result = results.rows.item(0).count;
+                        count = results.rows.item(0).count;
+                    },
+                    (tx, error) => {
+                        console.error('Query failed: ', error.message);
+                        // return true aborts and rolls back the transaction,
+                        // return false or nothing continues the transaction despite the error
+                        return true;
                     }
                 )
             });
@@ -203,16 +210,55 @@ function Tasks() {
                         const tempData = [];
 
                         for (let i = 0; i < rows.length; i++) {
-                            tempData.push(rows.item(i));
+                            const row = rows.item(i);
+
+                            // convert list string to JSON
+                            if (row.tags) {
+                                row.tags = JSON.parse(row.tags);
+                            } else if (row.assignees) {
+                                row.assignees = JSON.parse(row.assignees);
+                            }
+
+                            tempData.push(row);
                         }
 
-                        // tempData will be a list of {id: 1, name: ..., etc}
-                        // so will need to structure into dbData
+                        dbData = tempData;
+                    },
+                    (tx, error) => {
+                        console.error('Query failed: ', error.message);
+                        // return true aborts and rolls back the transaction,
+                        // return false or nothing continues the transaction despite the error
+                        return true;
                     }
                 )
             });
+
+            if (count !== 0) {
+                setData(JSON.stringify(dbData));
+            } else {
+                // if it doesnt exist in localstorage, get from local file
+                fetch("/data/data.json")
+                .then((response) => {
+                    if (!response.ok) {
+                        console.log('error thrown');
+                        throw new Error('Failed to fetch data');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    // set data into DB
+                    // localStorage.setItem('data', JSON.stringify(data));
+                    setData(data);
+                });
+            }
         }
-    }, []);
+
+        loadDB();
+    }, [db]);
+
+    const storeData = (newData) => {
+        // loop through the list of tasks in data and store it individually onto the sqlite db
+    }
 
     // web app version
     // load only on first mount, otherwise claling setdata will re-render, which will keep looping and calling setdata
