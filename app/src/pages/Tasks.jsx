@@ -12,7 +12,16 @@ import "react-timelines/lib/css/style.css";
 import PageTitle from '../components/PageTitle';
 import TaskModal from '../components/TaskModal';
 
-// import * as SQLite from 'expo-sqlite';
+// import SQLite from 'react-native-sqlite-storage';
+
+// const db = SQLite.openDatabase(
+//     {
+//         name: 'MainDB',
+//         location: 'default'
+//     },
+//     () => {},
+//     (error) => { console.log(error) }
+// );
 
 
 const now = new Date();
@@ -432,7 +441,7 @@ function Tasks() {
                             <Typography sx={{ flex: 1, fontSize: '10px', color: 'black' }}>{dateToString(task.endTime)}</Typography>
                         </Box>
                     )) : (
-                        <Typography>No Urgent Tasks</Typography>
+                        <Typography>No Tasks</Typography>
                     )}
                 </Box>
             </Box>
