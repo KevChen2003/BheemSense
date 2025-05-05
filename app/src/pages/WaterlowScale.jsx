@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import PageTitle from '../components/PageTitle';
 import { Box, Typography, Button, TextField, FormControl, FormLabel, RadioGroup, Radio, FormControlLabel, Checkbox, FormGroup } from '@mui/material';
 import { } from '@mui/icons-material';
 
 
 function WaterlowScale() {
+
+    const navigate = useNavigate();
 
     // following the given waterlow scale format for now, meaning that the start of the form does ask for DOB and sex
     // but the form still asks for age group and gender
@@ -60,6 +62,9 @@ function WaterlowScale() {
 
         console.log(formData);
         console.log('Submitted');
+
+        // go back to prev page after submitting
+        navigate(-1);
     }
 
     const handleChange = (event) => {

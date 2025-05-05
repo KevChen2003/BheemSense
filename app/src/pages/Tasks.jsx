@@ -11,7 +11,7 @@ import "react-timelines/lib/css/style.css";
 import PageTitle from '../components/PageTitle';
 import TaskModal from '../components/TaskModal';
 
-import SQLite from 'react-native-sqlite-storage';
+// import SQLite from 'react-native-sqlite-storage';
 
 // const db = SQLite.openDatabase(
 //     {
@@ -215,7 +215,9 @@ function Tasks() {
                             // convert list string to JSON
                             if (row.tags) {
                                 row.tags = JSON.parse(row.tags);
-                            } else if (row.assignees) {
+                            } 
+
+                            if (row.assignees) {
                                 row.assignees = JSON.parse(row.assignees);
                             }
 
