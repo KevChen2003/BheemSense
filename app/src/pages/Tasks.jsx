@@ -125,142 +125,142 @@ function Tasks() {
     const [urgent, setUrgent] = useState(false);
     const [modalStatus, setModalStatus] = useState(false);
 
-    // sqlite
-    useEffect(() => {
+    // // sqlite
+    // useEffect(() => {
         
-        // const loadDB = async () => {
-        //     const db = await SQLite.openDatabaseAsync('data');
+    //     // const loadDB = async () => {
+    //     //     const db = await SQLite.openDatabaseAsync('data');
 
-        //     const result = await db.getFirstAsync('SELECT COUNT(*) AS count FROM data'); 
+    //     //     const result = await db.getFirstAsync('SELECT COUNT(*) AS count FROM data'); 
 
-        //     const dbData = await db.getAllAsync('SELECT * FROM data');
+    //     //     const dbData = await db.getAllAsync('SELECT * FROM data');
 
-            // if (result.count !== 0) {
-            //     setData(JSON.stringify(dbData));
-            // } else {
-            //     // if it doesnt exist in localstorage, get from local file
-            //     fetch("/data/data.json")
-            //     .then((response) => {
-            //         if (!response.ok) {
-            //             console.log('error thrown');
-            //             throw new Error('Failed to fetch data');
-            //         }
-            //         return response.json();
-            //     })
-            //     .then((data) => {
-            //         // set data into DB
-            //         // localStorage.setItem('data', JSON.stringify(data));
-            //         setData(data);
-            //     });
-            // }
-        // }
-        // loadDB();
+    //         // if (result.count !== 0) {
+    //         //     setData(JSON.stringify(dbData));
+    //         // } else {
+    //         //     // if it doesnt exist in localstorage, get from local file
+    //         //     fetch("/data/data.json")
+    //         //     .then((response) => {
+    //         //         if (!response.ok) {
+    //         //             console.log('error thrown');
+    //         //             throw new Error('Failed to fetch data');
+    //         //         }
+    //         //         return response.json();
+    //         //     })
+    //         //     .then((data) => {
+    //         //         // set data into DB
+    //         //         // localStorage.setItem('data', JSON.stringify(data));
+    //         //         setData(data);
+    //         //     });
+    //         // }
+    //     // }
+    //     // loadDB();
 
-        const loadDB = async () => {
-            await SQLite.openDatabase(
-                {
-                    name: 'MainDB',
-                    location: 'default'
-                },
-                (dbInstance) => { setDb(dbInstance) },
-                (error) => { console.error('Error opening database', error) }
-            );
+    //     const loadDB = async () => {
+    //         await SQLite.openDatabase(
+    //             {
+    //                 name: 'MainDB',
+    //                 location: 'default'
+    //             },
+    //             (dbInstance) => { setDb(dbInstance) },
+    //             (error) => { console.error('Error opening database', error) }
+    //         );
             
-            // create table for Tasks if it doesn't exist already
-            await db.transaction(async (tx) => {
-                await tx.executeSql(
-                    `CREATE TABLE IF NOT EXISTS Tasks (
-                        taskID INTEGER PRIMARY KEY, 
-                        urgent BOOLEAN,
-                        startTime TEXT,
-                        endTime TEXT,
-                        title TEXT,
-                        description TEXT,
-                        tags TEXT,
-                        assignees TEXT,
-                        trackNum INTEGER, 
-                        taskColour TEXT
-                    )`
-                )
-            });
+    //         // create table for Tasks if it doesn't exist already
+    //         await db.transaction(async (tx) => {
+    //             await tx.executeSql(
+    //                 `CREATE TABLE IF NOT EXISTS Tasks (
+    //                     taskID INTEGER PRIMARY KEY, 
+    //                     urgent BOOLEAN,
+    //                     startTime TEXT,
+    //                     endTime TEXT,
+    //                     title TEXT,
+    //                     description TEXT,
+    //                     tags TEXT,
+    //                     assignees TEXT,
+    //                     trackNum INTEGER, 
+    //                     taskColour TEXT
+    //                 )`
+    //             )
+    //         });
 
-            let count;
+    //         let count;
 
-            await db.transaction(async (tx) => {
-                await tx.executeSql("SELECT COUNT(*) AS count FROM Tasks",
-                    [],
-                    (tx, results) => {
-                        count = results.rows.item(0).count;
-                    },
-                    (tx, error) => {
-                        console.error('Query failed: ', error.message);
-                        // return true aborts and rolls back the transaction,
-                        // return false or nothing continues the transaction despite the error
-                        return true;
-                    }
-                )
-            });
+    //         await db.transaction(async (tx) => {
+    //             await tx.executeSql("SELECT COUNT(*) AS count FROM Tasks",
+    //                 [],
+    //                 (tx, results) => {
+    //                     count = results.rows.item(0).count;
+    //                 },
+    //                 (tx, error) => {
+    //                     console.error('Query failed: ', error.message);
+    //                     // return true aborts and rolls back the transaction,
+    //                     // return false or nothing continues the transaction despite the error
+    //                     return true;
+    //                 }
+    //             )
+    //         });
 
-            let dbData;
-            await db.transaction(async (tx) => {
-                await tx.executeSql("SELECT * FROM Tasks",
-                    [],
-                    (tx, results) => {
-                        const rows = results.rows;
-                        const tempData = [];
+    //         let dbData;
+    //         await db.transaction(async (tx) => {
+    //             await tx.executeSql("SELECT * FROM Tasks",
+    //                 [],
+    //                 (tx, results) => {
+    //                     const rows = results.rows;
+    //                     const tempData = [];
 
-                        for (let i = 0; i < rows.length; i++) {
-                            const row = rows.item(i);
+    //                     for (let i = 0; i < rows.length; i++) {
+    //                         const row = rows.item(i);
 
-                            // convert list string to JSON
-                            if (row.tags) {
-                                row.tags = JSON.parse(row.tags);
-                            } 
+    //                         // convert list string to JSON
+    //                         if (row.tags) {
+    //                             row.tags = JSON.parse(row.tags);
+    //                         } 
 
-                            if (row.assignees) {
-                                row.assignees = JSON.parse(row.assignees);
-                            }
+    //                         if (row.assignees) {
+    //                             row.assignees = JSON.parse(row.assignees);
+    //                         }
 
-                            tempData.push(row);
-                        }
+    //                         tempData.push(row);
+    //                     }
 
-                        dbData = tempData;
-                    },
-                    (tx, error) => {
-                        console.error('Query failed: ', error.message);
-                        // return true aborts and rolls back the transaction,
-                        // return false or nothing continues the transaction despite the error
-                        return true;
-                    }
-                )
-            });
+    //                     dbData = tempData;
+    //                 },
+    //                 (tx, error) => {
+    //                     console.error('Query failed: ', error.message);
+    //                     // return true aborts and rolls back the transaction,
+    //                     // return false or nothing continues the transaction despite the error
+    //                     return true;
+    //                 }
+    //             )
+    //         });
 
-            if (count !== 0) {
-                setData(JSON.stringify(dbData));
-            } else {
-                // if it doesnt exist in localstorage, get from local file
-                fetch("/data/data.json")
-                .then((response) => {
-                    if (!response.ok) {
-                        console.log('error thrown');
-                        throw new Error('Failed to fetch data');
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    // set data into DB
-                    // localStorage.setItem('data', JSON.stringify(data));
-                    setData(data);
-                });
-            }
-        }
+    //         if (count !== 0) {
+    //             setData(JSON.stringify(dbData));
+    //         } else {
+    //             // if it doesnt exist in localstorage, get from local file
+    //             fetch("/data/data.json")
+    //             .then((response) => {
+    //                 if (!response.ok) {
+    //                     console.log('error thrown');
+    //                     throw new Error('Failed to fetch data');
+    //                 }
+    //                 return response.json();
+    //             })
+    //             .then((data) => {
+    //                 // set data into DB
+    //                 // localStorage.setItem('data', JSON.stringify(data));
+    //                 setData(data);
+    //             });
+    //         }
+    //     }
 
-        loadDB();
-    }, [db]);
+    //     loadDB();
+    // }, [db]);
 
-    const storeData = (newData) => {
-        // loop through the list of tasks in data and store it individually onto the sqlite db
-    }
+    // const storeData = (newData) => {
+    //     // loop through the list of tasks in data and store it individually onto the sqlite db
+    // }
 
     // web app version
     // load only on first mount, otherwise claling setdata will re-render, which will keep looping and calling setdata
