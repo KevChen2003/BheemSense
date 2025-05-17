@@ -41,7 +41,8 @@ function PatientPage() {
     return (
         <> 
             <PageTitle title={patient.name}/>
-            <Box sx={{ display: 'flex', flexDirection: 'row', height: '75%' }}>
+            
+            <Box sx={{ display: 'flex', flexDirection: 'row', height: '68vh' }}>
                 <img src='/data/heatmap.jpg' alt='heatmap' style={{ display: 'flex', flex: 1, height: '100%', width: '50vw' }}/>
 
                 <img src='/data/graphs.jpg' alt='data' style={{ display: 'flex', flex: 1, height: '100%', width: '50vw' }}/>
@@ -65,7 +66,7 @@ function PatientPage() {
                     </Box>
                 </Box> */}
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', height: '11.5%' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', height: '10vh' }}>
                 {/* buttons */}
                 <Button sx={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%', backgroundColor: '#0084FF', borderRadius: '15px', textTransform: 'none' }}>
                     <MenuBook sx={{ color: 'white', width: '80%', height: '80%' }} />
