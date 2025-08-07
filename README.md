@@ -25,4 +25,6 @@ Languages:
 Frameworks: 
 * React, Material UI
 
+Essential code components can be found in /app/src. 
+
 The original design on Figma can be found [here](https://www.figma.com/design/xkH4dwvmjOB7wGqkijWYM8/BheemSense-UX-UI?node-id=0-1&t=IX6ELrAkod8pJ6mV-1).
